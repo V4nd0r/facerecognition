@@ -11,7 +11,7 @@ import Clarifai from 'clarifai';
 import './App.css';
 
 const app = new Clarifai.App({
-  apiKey:
+  apiKey:''
 });
 
 
@@ -69,21 +69,22 @@ class App extends Component {
   }
 
   render() {
+   const {isSignedIn, imageUrl, route, box} = this.state;
   return (
     <div className="App">
       <ParticlesBg type='cobweb' bg={true}/>
-      <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/> 
+      <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/> 
       <Logo />
-      {this.state.route === 'home' 
+      {route === 'home' 
         ? <div> 
         <Rank/>
         <ImageLinkForm 
           onInputChange={this.onInputChange} 
           onButtonSubmit={this.onButtonSubmit}/>
-        <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
+        <FaceRecognition box={box} imageUrl={imageUrl} />
         </div>
         :(
-          this.state.route ==='signIn'
+          route ==='signIn'
         ? <SignIn onRouteChange = {this.onRouteChange}/>
         : <Register onRouteChange = {this.onRouteChange}/>
         )
