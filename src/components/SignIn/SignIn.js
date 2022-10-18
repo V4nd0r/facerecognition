@@ -1,8 +1,8 @@
 import React from "react";
 
 class SignIn extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(loadUser) {
+        super(loadUser);
         this.state = {
             signInEmail: '',
             signInPassword: '',
