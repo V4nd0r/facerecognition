@@ -9,14 +9,17 @@ class SignIn extends React.Component {
         }
     }
 
+    //A method that updates the state of the component with the new value of the email input field
     onEmailChange = (event) => {
         this.setState({signInEmail: event.target.value})
     }
 
+    // A method that updates the state of the component with the new value of the password input field.
     onPasswordChange = (event) => {
         this.setState({signInPassword: event.target.value})
     }
 
+    // A method that sends a POST request to a server endpoint with the email and password provided by the user
     onSubmitSignIn = () => {
         fetch('https://smart-brain-api-baed.onrender.com/signIn', {
             method: 'post',
@@ -35,6 +38,8 @@ class SignIn extends React.Component {
         })
     }
 
+    
+    //Rendering the sign-in form
     render() {
     const {onRouteChange} =this.props;
     return (
