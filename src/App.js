@@ -72,7 +72,6 @@ class App extends Component {
     // Set the 'imageUrl' state to the value of the 'input' state.
     this.setState({imageUrl: this.state.input});
     
-    /*
     // Send a fetch request to the 'imageurl' endpoint of the API, passing in the 'input' value as a JSON object.
     fetch('https://smart-brain-api-baed.onrender.com/imageurl', {
       method: 'post',
@@ -107,30 +106,6 @@ class App extends Component {
       })
       .catch(err => console.log(err));
   }
-
-  */
-  App.models.predict('face-detection', this.state.input)
-  .then(response => {
-    console.log('hi', response)
-    if (response) {
-      fetch('https://smart-brain-api-baed.onrender.com/image', {
-        method: 'put',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          id: this.state.user.id
-        })
-      })
-        .then(response => response.json())
-        .then(count => {
-          this.setState(Object.assign(this.state.user, { entries: count}))
-        })
-
-    }
-    this.displayFaceBox(this.calculateFaceLocation(response))
-  })
-  .catch(err => console.log(err));
-}
-
 
   // This function is triggered when the user changes the route (i.e., clicks on the 'Sign Out' button).
   onRouteChange = (route) => {
