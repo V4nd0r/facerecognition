@@ -9,6 +9,41 @@ import Register from './components/Register/Register';
 import ParticlesBg from 'particles-bg';
 import './App.css';
 
+const returnClarifaiRequestOptions = (imageUrl) =>  {
+  const PAT = '08d1011ad0a74b9686fa3fe779dac1d4';
+  const USER_ID = 'bryjlhrvhdt2';
+  const APP_ID = 'my-first-application';
+  const MODEL_ID = 'face-detection';
+  const IMAGE_URL = imageUrl;
+
+  const raw = JSON.stringify({
+    "user_app_id": {
+        "user_id": USER_ID,
+        "app_id": APP_ID
+    },
+    "inputs": [
+        {
+            "data": {
+                "image": {
+                    "url": IMAGE_URL
+                }
+            }
+        }
+    ]
+  });
+
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Key ' + PAT
+    },
+    body: raw
+  };
+
+  return requestOptions;
+  }
+
 //Defining the initial state of the application
 const initialState = {
     input: '',
@@ -71,15 +106,23 @@ class App extends Component {
   onButtonSubmit = () => {
     // Set the 'imageUrl' state to the value of the 'input' state.
     this.setState({imageUrl: this.state.input});
-    
-    // Send a fetch request to the 'imageurl' endpoint of the API, passing in the 'input' value as a JSON object.
-    fetch('https://smart-brain-api-baed.onrender.com/imageurl', {
-      method: 'post',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        input: this.state.input
-      })
-    })
+
+    //app.models.predict ('face-detection', this.state.input)
+      fetch("https://api.clarifai.com/v2/models/" + 'face-detection' + "/outputs", returnClarifaiRequestOptions(this.state.input))
+      .then(response => response.json())
+      .then(respose => {
+        console.log(respose)
+        if (respose) { 
+          // Send a fetch request to the 'imageurl' endpoint of the API, passing in the 'input' value as a JSON object.
+          fetch('https://smart-brain-api-baed.onrender.com/imageurl', {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              input: this.state.input
+            })
+          })
+        }
+      })  
      // When the response is received, convert it to a JSON object.
     .then(response => response.json())
     // If the response is not empty:
