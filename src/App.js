@@ -139,6 +139,7 @@ class App extends Component {
           })
           // When the response is received, convert it to a JSON object and update the 'entries' property of the 'user' state.
           .then(response => response.json())
+          .then ((result) => this.displayFaceBox(this.calculateFaceLocation(result)))
           .then(count => {
             this.setState(Object.assign(this.state.user, {entries: count}))
           })
