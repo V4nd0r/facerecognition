@@ -36,7 +36,7 @@ const returnClarifaiRequestOptions = (imageUrl) =>  {
     method: 'POST',
     headers: {
         'Accept': 'application/json',
-        'Authorization': 'Key ' + PAT
+        'Authorization': PAT
     },
     body: raw
   };
@@ -131,26 +131,22 @@ class App extends Component {
         if(response){
           // Send a fetch request to the 'image' endpoint of the API, passing in the 'id' of the current user as a JSON object.
           fetch('https://smart-brain-api-baed.onrender.com/image', {
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
+              method: 'put',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({
               id: this.state.user.id
+              })
             })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, {entries: count}));
+              });
+            }
+            this.displayFaceBox(this.calculateFaceLocation(response));
           })
-          // When the response is received, convert it to a JSON object and update the 'entries' property of the 'user' state.
-          .then(response => response.json())
-          .then ((result) => this.displayFaceBox(this.calculateFaceLocation(result)))
-          .then(count => {
-            this.setState(Object.assign(this.state.user, {entries: count}))
-          })
-          .catch(console.log)
-        }
+          .catch((error) => console.log('error', error));
+      }
 
-        // Calculate the location of the face in the image and display a bounding box around it.
-        this.displayFaceBox(this.calculateFaceLocation(response))
-      })
-      .catch(err => console.log(err));
-  }
 
   // This function is triggered when the user changes the route (i.e., clicks on the 'Sign Out' button).
   onRouteChange = (route) => {
