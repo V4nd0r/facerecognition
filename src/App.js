@@ -108,7 +108,7 @@ class App extends Component {
     this.setState({imageUrl: this.state.input});
 
     //app.models.predict ('face-detection', this.state.input)
-      fetch(`https://api.clarifai.com/v2/models/face-detection/outputs`, returnClarifaiRequestOptions(this.state.input))
+      fetch("https://api.clarifai.com/v2/models/" + 'face-detection' + "/outputs", returnClarifaiRequestOptions(this.state.input))
       .then(response => response.json())
       .then(respose => {
         console.log(respose)
