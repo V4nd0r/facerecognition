@@ -112,7 +112,7 @@ class App extends Component {
       fetch(`https://api.clarifai.com/v2/models/face-detection/outputs`, returnClarifaiRequestOptions(this.state.input))
       .then(response => response.json())
       .then(respose => {
-        console.log(respose, 'clarifai')
+        console.log(respose)
         if (respose) { 
           // Send a fetch request to the 'imageurl' endpoint of the API, passing in the 'input' value as a JSON object.
           fetch('https://smart-brain-api-baed.onrender.com/imageurl', {
