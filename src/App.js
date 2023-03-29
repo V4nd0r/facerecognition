@@ -95,8 +95,7 @@ class App extends Component {
 
   // Update the state to display the bounding box around the face
   displayFaceBox = (box) => {
-    this.setState({box: box})
-    .then(console.log('The box: '+ box));
+    this.setState({box: box});
   }
 
   // Update the state with the input value as the user types in the image URL
